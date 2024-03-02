@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+#define P 23
+#define G 9
+
+unsigned long long modExp(unsigned long long a, unsigned long long b, unsigned long long p) {
+    unsigned long long result = 1;
+    while (b > 0) {
+        if (b % 2 == 1)
+            result = (result * a) % p;
+        a = (a * a) % p;
+        b /= 2;
+    }
+    return result;
+}
+
+int main() {
+    unsigned long long a = 4;
+    unsigned long long b = 3;
+
+
+    unsigned long long x = modExp(G, a, P);
+    unsigned long long y = modExp(G, b, P);
+
+    printf("x = %llu\ny = %llu\n", x, y);
+
+    unsigned long long ka = modExp(y, a, P);
+    unsigned long long kb = modExp(x, b, P);
+
+    printf("Shared Secret Key: %llu\n", ka);
+
+    return 0;
+}
