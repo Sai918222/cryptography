@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int mod_exp(int a, int b, int q) {
+    long long result = 1;
+    a = a % q;
+    while (b > 0) {
+        if (b & 1)
+            result = (result * a) % q;
+        b = b >> 1; 
+        a = (a * a) % q;
+    }
+    return result;
+}
+
+int main() {
+    
+    int q = 23; 
+    int a = 5; 
+
+    int secret_alice = 6;
+    int secret_bob = 15;
+
+    
+    int A = mod_exp(a, secret_alice, q);
+
+    int B = mod_exp(a, secret_bob, q);
+
+  
+    int shared_key_alice = mod_exp(B, secret_alice, q);
+
+    int shared_key_bob = mod_exp(A, secret_bob, q);
+
+    printf("Shared secret key computed by Alice: %d\n", shared_key_alice);
+    printf("Shared secret key computed by Bob: %d\n", shared_key_bob);
+
+    return 0;
+}
