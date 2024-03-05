@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int modInverse(int a, int m) {
+    int m0 = m;
+    int y = 0, x = 1;
+
+    if (m == 1)
+        return 0;
+
+    while (a > 1) {
+       
+        int q = a / m;
+        int t = m;
+
+        m = a % m, a = t;
+        t = y;
+
+        y = x - q * y;
+        x = t;
+    }
+
+
+    if (x < 0)
+        x += m0;
+
+    return x;
+}
+
+int decrypt(int ciphertext, int d, int n) {
+    return modInverse(ciphertext, n);
+}
+
+int main() {
+    
+    int n = 187; 
+    int e = 7;  
+    int d = 23; 
+
+    int ciphertext = 45; 
+
+    int decrypted_message = decrypt(ciphertext, d, n);
+
+    printf("Decrypted message: %d\n", decrypted_message);
+
+    return 0;
+}
